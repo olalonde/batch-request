@@ -10,8 +10,6 @@ var _ = require('lodash'),
     methods = require('methods'),
     request = require('supertest');
 
-var app = require('./helpers/app');
-
 // Add a Chance mixin for creating a fake batch-request object
 chance.mixin({
     batchRequest: function(params) {
@@ -45,6 +43,17 @@ chance.mixin({
 });
 
 describe('options', function() {
+  var app;
+
+  before(function(done) {
+    app = require('./helpers/app')();
+    done();
+  });
+
+  after(function(done) {
+    app.server.close(done);
+  });
+
     describe('max', function() {
 
         it('obeys default of 20', function(done) {
