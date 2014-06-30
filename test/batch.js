@@ -7,11 +7,20 @@ var Chance = require('chance'),
     expect = require('chai').expect,
     request = require('supertest');
 
-var app = require('./helpers/app');
-
-var batch = require('../lib/batch-request')();
-
 describe('batch', function() {
+    var app;
+    var batch;
+
+    before(function(done) {
+      app = require('./helpers/app')();
+      batch = require('../lib/batch-request')();
+      done();
+    });
+
+    after(function(done) {
+      app.server.close(done);
+    });
+
     describe('basic', function() {
         it('looks good', function() {
             expect(batch).to.be.a('function');
