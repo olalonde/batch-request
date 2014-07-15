@@ -57,7 +57,24 @@ describe('batch', function() {
                 });
         });
 
-        it('will handle a POST correctly', function(done) {
+      it('can batch to a relative path', function(done) {
+        request(app)
+          .post('/batch')
+          .send({
+            getName: {
+              url: '/users/1/name'
+            }
+          })
+          .expect(200, function(err, res) {
+            expect(err).to.not.exist;
+            expect(res.body).to.have.property('getName');
+            expect(res.body.getName.statusCode).to.equal(200);
+            expect(res.body.getName.body).to.be.a('string');
+            done();
+          });
+      });
+
+      it('will handle a POST correctly', function(done) {
             request(app)
                 .post('/batch')
                 .send({
