@@ -3,6 +3,8 @@ Batch Request
 
 A simple library for batching HTTP requests
 
+Looking for [the Koa version of this module](https://github.com/socialradar/koa-batch)?
+
 [View Documentation](http://batch-request.socialradar.com)
 
 [![Build Status](https://travis-ci.org/socialradar/batch-request.png?branch=master)](https://travis-ci.org/socialradar/batch-request) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
