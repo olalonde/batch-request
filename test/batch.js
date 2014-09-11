@@ -12,13 +12,13 @@ describe('batch', function() {
     var batch;
 
     before(function(done) {
-      app = require('./helpers/app')();
-      batch = require('../lib/batch-request')();
-      done();
+        app = require('./helpers/app')();
+        batch = require('../lib/batch-request')();
+        done();
     });
 
     after(function(done) {
-      app.server.close(done);
+        app.server.close(done);
     });
 
     describe('basic', function() {
@@ -57,24 +57,24 @@ describe('batch', function() {
                 });
         });
 
-      it('can batch to a relative path', function(done) {
-        request(app)
-          .post('/batch')
-          .send({
-            getName: {
-              url: '/users/1/name'
-            }
-          })
-          .expect(200, function(err, res) {
-            expect(err).to.not.exist;
-            expect(res.body).to.have.property('getName');
-            expect(res.body.getName.statusCode).to.equal(200);
-            expect(res.body.getName.body).to.be.a('string');
-            done();
-          });
-      });
+        it('can batch to a relative path', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        url: '/users/1/name'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    done();
+                });
+        });
 
-      it('will handle a POST correctly', function(done) {
+        it('will handle a POST correctly', function(done) {
             request(app)
                 .post('/batch')
                 .send({

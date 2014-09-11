@@ -43,16 +43,16 @@ chance.mixin({
 });
 
 describe('options', function() {
-  var app;
+    var app;
 
-  before(function(done) {
-    app = require('./helpers/app')();
-    done();
-  });
+    before(function(done) {
+        app = require('./helpers/app')();
+        done();
+    });
 
-  after(function(done) {
-    app.server.close(done);
-  });
+    after(function(done) {
+        app.server.close(done);
+    });
 
     describe('max', function() {
 

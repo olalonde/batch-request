@@ -10,27 +10,27 @@ var _ = require('lodash'),
     request = require('supertest');
 
 describe('validate', function() {
-  var app;
-  var appAllowed;
-  var batch;
+    var app;
+    var appAllowed;
+    var batch;
 
-  before(function(done) {
-    app = require('./helpers/app')();
-    appAllowed = require('./helpers/app')({
-      port: 3001,
-      allowedHosts: [
-        'socialradar.com',
-        'localhost:3001'
-      ]
+    before(function(done) {
+        app = require('./helpers/app')();
+        appAllowed = require('./helpers/app')({
+            port: 3001,
+            allowedHosts: [
+                'socialradar.com',
+                'localhost:3001'
+            ]
+        });
+        batch = require('../lib/batch-request')();
+        done();
     });
-    batch = require('../lib/batch-request')();
-    done();
-  });
 
-  after(function(done) {
-    appAllowed.server.close();
-    app.server.close(done);
-  });
+    after(function(done) {
+        appAllowed.server.close();
+        app.server.close(done);
+    });
 
     describe('basic', function() {
         it('looks good', function() {
