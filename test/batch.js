@@ -12,7 +12,7 @@ describe('batch', function() {
     var batch;
 
     before(function(done) {
-        app = require('./helpers/app')();
+        app = require('./helpers/app')({ smartDecode: true });
         batch = require('../lib/batch-request')();
         done();
     });
@@ -373,6 +373,40 @@ describe('batch', function() {
                     done();
                 });
 
+        });
+
+    });
+
+    describe('smart decode', function() {
+        it('can mix json responses with binary responses', function(done) {
+            request(app)
+                .post('/batch')
+                .send({
+                    getName: {
+                        url: 'http://localhost:3000/users/1/name'
+                    },
+                    logo: {
+                        url: 'http://localhost:3000/static/social-logo.png'
+                    },
+                    plain: {
+                        url: 'http://localhost:3000/static/plain.txt'
+                    }
+                })
+                .expect(200, function(err, res) {
+                    expect(err).to.not.exist;
+                    expect(res.body).to.have.property('getName');
+                    expect(res.body.getName.statusCode).to.equal(200);
+                    expect(res.body.getName.body).to.be.a('string');
+                    expect(res.body).to.have.property('logo');
+                    expect(res.body.logo.statusCode).to.equal(200);
+                    expect(res.body.logo.body).to.be.a('string');
+                    expect(res.body.logo.body.length).to.equal(16644);
+                    var buf = new Buffer(res.body.logo.body, 'base64');
+                    expect(buf).to.have.length(res.body.logo.headers['content-length']);
+                    expect(res.body).to.have.property('plain');
+                    expect(res.body.plain.body).to.equal('some plain text file\n');
+                    done();
+                });
         });
     });
 });

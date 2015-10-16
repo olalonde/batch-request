@@ -3,6 +3,7 @@ var _ = require('lodash'),
     express = require('express'),
     Chance = require('chance'),
     chance = new Chance(),
+    path = require('path'),
     batchRequest = require('../../lib/batch-request');
 
 function getApp(options) {
@@ -11,6 +12,7 @@ function getApp(options) {
     var app = express();
 
     app.use(express.json());
+    app.use('/static', express.static(path.join(__dirname, 'files')));
 
     // A POST endpoint to use the batch middleware
     app.post('/batch', batch.validate, batch);
